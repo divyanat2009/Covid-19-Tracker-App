@@ -1,4 +1,12 @@
 const mapbox_token="pk.eyJ1IjoiZGl2eWFuYXQyMDA5IiwiYSI6ImNrZ3NjZW9mbTBhdmMyd3J6OGp2czNiZnAifQ.MGN9qZ3Mku6-FSlgJqgbEQ";
+mapboxgl.accessToken = mapbox_token;
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/dark-v10',
+zoom:1.5,
+center:[0,20]
+});
+
 const url="https://api.covid19api.com/country/${userInput}/status/confirmed"
 
 function init(){

@@ -16,8 +16,9 @@ function submitForm(){
   $("#app-form").submit(e=>{
       e.preventDefault();
   const userInput= $("#countryInput").val();  
+  const fromDateInput= $('#from').val();
+  const toDateInput= $('#to').val();
   //console.log(userInput);
-  getCasesResult(userInput);
   });  
 }
 function populateCountries(){
@@ -29,10 +30,10 @@ function formatQueryParams(params){
   const queryItems= Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)  
   return queryItems.join("&");
 }
-function getCasesResult(query){
+function getCasesResult(userInput, fromDateInput, toDateInput){
   const params={
-    from: $('#from').val(),
-    to: $('#to').val()
+    from: fromDateInput,
+    to: toDateInput
 };
 
 const queryString= formatQueryParams(params);

@@ -20,16 +20,22 @@ function formatQueryParams(){
   const queryItems= Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)  
   return queryItems.join("&");
 }
-
-function getCasesByCountry(){
-  fetch(url)
+function getCasesResult(query){
+  const params={
+    from: $('#from'),
+    to: $('#to')
+};
+const queryString= formatQueryParams(params);
+const searchURL= url + '?' + queryString;
+fetch(searchURL)
   .then(response =>response.json())
   .then(response => renderCountryResults(response.data))
   .catch(err =>alert(err));
 }
 function renderCountryResults(countryList){
-  countryList.forEach(country=>{
-      $("#results").append(`${country.Cases}`)
+  countryList.forEach(country => {
+    $("#results").empty();
+    $("#results").append(`${country.Cases}`)
   })
 }
 

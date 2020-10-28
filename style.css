@@ -19,3 +19,20 @@ body{
     width: 100vw;
     height:100vh;
 }
+/*Groups & Items-Mobile First*/
+.group{
+    display: flex;
+    flex-direction: column;
+    }
+  .item{
+    flex:1;
+}
+ 
+  @media screen and (min-width:768px){
+    .group {
+      flex-direction:row;
+      width: 100%;
+      }
+ }
+
+

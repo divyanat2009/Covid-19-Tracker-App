@@ -47,10 +47,12 @@ fetch(searchURL)
   .catch(err =>alert(err));
 }
 function renderCountryResults(countryList){
-  countryList.forEach(country => {
     $("#results").empty();
-    $("#results").append(`<li>${country.Cases}</li>`)
-  })
-}
+    $("#results").append('<ul>');
+    countryList.forEach(country => {
+      $("#results").append(`<li>${country.Cases}</li>`)
+    })
+    $("#results").append('</ul>');
+  }
 
 $(init);        

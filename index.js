@@ -19,6 +19,7 @@ function submitForm(){
   const fromDateInput= $('#from').val();
   const toDateInput= $('#to').val();
   //console.log(userInput);
+  getCasesResult(userInput, fromDateInput, toDateInput);
   });  
 }
 function populateCountries(){
@@ -31,6 +32,7 @@ function formatQueryParams(params){
   return queryItems.join("&");
 }
 function getCasesResult(userInput, fromDateInput, toDateInput){
+  const url="https://api.covid19api.com/country/${userInput}/status/confirmed";  
   const params={
     from: fromDateInput,
     to: toDateInput
@@ -38,16 +40,16 @@ function getCasesResult(userInput, fromDateInput, toDateInput){
 
 const queryString= formatQueryParams(params);
 const searchURL= url + '?' + queryString;
-console.log(searchURL);
+//console.log(searchURL);
 fetch(searchURL)
   .then(response =>response.json())
-  .then(response => renderCountryResults(response.length))
+  .then(response => renderCountryResults(response))
   .catch(err =>alert(err));
 }
 function renderCountryResults(countryList){
   countryList.forEach(country => {
     $("#results").empty();
-    $("#results").append(`${country.Cases}`)
+    $("#results").append(`<li>${country.Cases}</li>`)
   })
 }
 

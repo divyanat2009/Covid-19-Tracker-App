@@ -1,12 +1,5 @@
-#nav-bar{
-    background-color: rgb(126, 14, 14);
-    background-image: url(images/coronavirus.jpg);
-    color: white;
-    margin:0;
-}
 h1{
-    padding:20px;
-    text-align: center;
+   text-align: center;
 }
 
 #info-container{   

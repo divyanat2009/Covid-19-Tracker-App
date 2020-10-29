@@ -9,8 +9,10 @@ zoom:1.5,
 const url="https://api.covid19api.com/country/${userInput}/status/confirmed"
 
 function init(){
+  $( "#from" ).datepicker();
+  $( "#to" ).datepicker();
   populateCountries();
-  submitForm();
+  submitForm();  
 }
 function submitForm(){
   $("#app-form").submit(e=>{
@@ -18,7 +20,6 @@ function submitForm(){
   const userInput= $("#countryInput").val();  
   const fromDateInput= $('#from').val();
   const toDateInput= $('#to').val();
-  //console.log(userInput);
   getCasesResult(userInput, fromDateInput, toDateInput);
   });  
 }
@@ -40,19 +41,29 @@ function getCasesResult(userInput, fromDateInput, toDateInput){
 
 const queryString= formatQueryParams(params);
 const searchURL= url + '?' + queryString;
-//console.log(searchURL);
 fetch(searchURL)
   .then(response =>response.json())
   .then(response => renderCountryResults(response))
   .catch(err =>alert(err));
 }
 function renderCountryResults(countryList){
-    $("#results").empty();
-    $("#results").append('<ul>');
-    countryList.forEach(country => {
-      $("#results").append(`<li>${country.Cases}</li>`)      
-    })
-    $("#results").append('</ul>');
-  }
-
+    $("#results").empty();    
+    let totalCount = getTotalCount(countryList);
+    $("#results").append(`<h3>Total confirmed cases: ${totalCount}</h3>`);
+    let lon = getLonLat(countryList, "Lon")
+    let lat = getLonLat(countryList, "Lat")
+    var marker = new mapboxgl.Marker()
+    .setLngLat([lon, lat])
+    .addTo(map);  
+}  
+function getLonLat(countryList, value){
+  return parseFloat(countryList[0][`${value}`]);
+}
+function getTotalCount(countryList){
+  let totalCount = 0;
+  countryList.forEach(country => {
+  totalCount +=  country.Cases;    
+  }) 
+  return totalCount;   
+}
 $(init);        

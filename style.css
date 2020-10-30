@@ -24,7 +24,7 @@ header{
 #submit{
   
     background: #eef0ee;
-    transition-property: background;
+    
     transition-duration: 1s;
     transition-timing-function: linear;
   }
@@ -33,6 +33,9 @@ header{
     color: rgb(231, 216, 216);
   }
   
+h3{
+  font-size: 20px;
+  color: rgb(255, 20, 20);
 }
 /*Groups & Items-Mobile First*/
 .group{

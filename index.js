@@ -28,7 +28,7 @@ function submitForm(){
 //Get list of countries
 function populateCountries(){
   countryList.forEach((country)=> {
-  $("#countryInput").append(`<option>${country}</option>` )
+  $("#countryInput").append(`<option value='select'>Select a country</option><option value='country'>${country}</option>` )
   })
 }
 //Format the query parameters

@@ -6,6 +6,7 @@ container: 'map',
 style: 'mapbox://styles/mapbox/dark-v10',
 zoom:1.5,
 });
+
 // Generate the URL
 const url="https://api.covid19api.com/country/${userInput}/status/confirmed"
 //Initialize the function
@@ -65,7 +66,9 @@ function renderCountryResults(countryList){
     style: 'mapbox://styles/mapbox/dark-v10',
     zoom:1.5,
     });    
-    var marker = new mapboxgl.Marker()
+    var marker = new mapboxgl.Marker({
+      color: "red"
+    })
     .setLngLat([lon, lat])
     .addTo(map);
 }  

@@ -1,15 +1,25 @@
+*{
+  font-family: 'Open Sans', sans-serif;
+}
 header{
    text-align: center;
    background-color: rgb(102, 20, 20);
-   color: rgb(231, 216, 216)
-   
+   color: rgb(231, 216, 216);
+   margin-bottom: 5px;
+   padding:0;  
+   display: flex;
 }
+
 #info-container{   
   padding:10px; 
 }
 #map{
     width: 100vw;
-    height:100vh;
+    height:71vh;
+}
+#app-form{
+  Font-size: 15px;
+  padding:5px;
 }
 /*Groups & Items-Mobile First*/
 .group{

@@ -21,6 +21,19 @@ header{
   Font-size: 15px;
   padding:5px;
 }
+#submit{
+  
+    background: #eef0ee;
+    transition-property: background;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+  }
+#submit:hover {
+    background: rgb(192, 11, 11);
+    color: rgb(231, 216, 216);
+  }
+  
+}
 /*Groups & Items-Mobile First*/
 .group{
     display: flex;

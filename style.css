@@ -1,5 +1,8 @@
-h1{
+header{
    text-align: center;
+   background-color: rgb(102, 20, 20);
+   color: rgb(231, 216, 216)
+   
 }
 #info-container{   
   padding:10px; 

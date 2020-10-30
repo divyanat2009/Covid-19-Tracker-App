@@ -64,7 +64,7 @@ function renderCountryResults(countryList){
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v10',
     zoom:1.5,
-    });
+    });    
     var marker = new mapboxgl.Marker()
     .setLngLat([lon, lat])
     .addTo(map);

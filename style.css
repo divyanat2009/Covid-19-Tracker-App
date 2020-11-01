@@ -9,7 +9,9 @@ header{
    padding:0;  
    display: flex;
 }
-
+h1{
+  margin-left: 10px;
+}
 #info-container{   
   padding:10px; 
 }
@@ -40,11 +42,11 @@ h3{
 /*Groups & Items-Mobile First*/
 .group{
     display: flex;
-    flex-direction: column;
-    }
+    flex-direction: column;    
+}
   .item{
     flex:1;
-}
+  }
  
   @media screen and (min-width:768px){
     .group {

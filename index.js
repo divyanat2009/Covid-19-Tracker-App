@@ -6,13 +6,24 @@ container: 'map',
 style: 'mapbox://styles/mapbox/dark-v10',
 zoom:1.5,
 });
+function displayLocationInfo(position) {
+  const { coords: { latitude, longitude } } = position;
+
+  // Get a new lat/lng object
+  // https://docs.mapbox.com/mapbox-gl-js/api/#lnglatlike
+  const center = new mapboxgl.LngLat(latitude, longitude);
+
+  // Center the map
+  // https://docs.mapbox.com/mapbox-gl-js/api/#map#setcenter
+  map.setCenter(center);
+}
 
 // Generate the URL
 const url="https://api.covid19api.com/country/${userInput}/status/confirmed"
 //Initialize the function
 function init(){
   $( "#from" ).datepicker();
-  $( "#to" ).datepicker();
+  $( "#to" ).datepicker(); 
   populateCountries();
   submitForm();  
 }
@@ -49,7 +60,27 @@ const queryString= formatQueryParams(params);
 const searchURL= url + '?' + queryString;
 fetch(searchURL)
   .then(response =>response.json())
-  .then(response => renderCountryResults(response))
+  .then(response => {
+    $(".charts").html("");
+      let data = response.map((res)=> {
+        return {
+          "cases" : res.Cases, 
+          "date": res.Date
+        }      
+      });
+      max = Math.max(...response.map((x)=>x.Cases));
+      data.forEach((obj)=> 
+      {
+        console.log(getPercentage(obj.cases, max));
+        let convertedValue = getPercentage(obj.cases, max);
+        $(".charts").append(`<div class="charts__chart chart--p${convertedValue} chart--xl">
+        <span class="charts__percent"><font color="black">${obj.date.split("T")[0].replace("20", "")}</font><br><font color="blue">${convertedValue}%</font></span>
+    
+      </div>`)
+      });
+      return renderCountryResults(response)
+    })
+    
   .catch(err =>alert(err));
 }
 // Render the results

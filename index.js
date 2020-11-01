@@ -115,4 +115,8 @@ function getTotalCount(countryList){
   }) 
   return totalCount;   
 }
+function getPercentage(x, max)
+{
+  return Math.round((x / max) * 100);
+}
 $(init);        

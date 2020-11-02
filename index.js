@@ -6,30 +6,19 @@ container: 'map',
 style: 'mapbox://styles/mapbox/dark-v10',
 zoom:1.5,
 });
-function displayLocationInfo(position) {
-  const { coords: { latitude, longitude } } = position;
-
-  // Get a new lat/lng object
-  // https://docs.mapbox.com/mapbox-gl-js/api/#lnglatlike
-  const center = new mapboxgl.LngLat(latitude, longitude);
-
-  // Center the map
-  // https://docs.mapbox.com/mapbox-gl-js/api/#map#setcenter
-  map.setCenter(center);
-}
-
 // Generate the URL
 const url="https://api.covid19api.com/country/${userInput}/status/confirmed"
 //Initialize the function
 function init(){
   $( "#from" ).datepicker();
-  $( "#to" ).datepicker(); 
+  $( "#to" ).datepicker();
   populateCountries();
   submitForm();  
 }
 //Create a watch to prevent form submission
 function submitForm(){
   $("#app-form").submit(e=>{
+    if(e.cancelable)
     e.preventDefault();
   const userInput= $("#countryInput").val();  
   const fromDateInput= $('#from').val();
@@ -60,8 +49,10 @@ const queryString= formatQueryParams(params);
 const searchURL= url + '?' + queryString;
 fetch(searchURL)
   .then(response =>response.json())
-  .then(response => {
-    $(".charts").html("");
+  .then(response => 
+    {
+      console.log(response);
+      $(".charts").html("");
       let data = response.map((res)=> {
         return {
           "cases" : res.Cases, 
@@ -80,14 +71,13 @@ fetch(searchURL)
       });
       return renderCountryResults(response)
     })
-    
   .catch(err =>alert(err));
 }
 // Render the results
 function renderCountryResults(countryList){
     $("#results").empty();    
     let totalCount = getTotalCount(countryList);
-    $("#results").append(`<h3>Total confirmed cases: ${totalCount}</h3>`);
+    $("#results").append(`<h3>View Chart Below: </h3>`);
     //Create marker on map
     let lon = getLonLat(countryList, "Lon")
     let lat = getLonLat(countryList, "Lat")
@@ -96,10 +86,8 @@ function renderCountryResults(countryList){
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v10',
     zoom:1.5,
-    });    
-    var marker = new mapboxgl.Marker({
-      color: "red"
-    })
+    });
+    var marker = new mapboxgl.Marker()
     .setLngLat([lon, lat])
     .addTo(map);
 }  

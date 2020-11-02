@@ -12,21 +12,20 @@ header{
 h1{
   margin-left: 10px;
 }
+
 #info-container{   
   padding:10px; 
 }
 #map{
     width: 100vw;
-    height:71vh;
+    height:70vh;
 }
 #app-form{
   Font-size: 15px;
   padding:5px;
 }
-#submit{
-  
-    background: #eef0ee;
-    
+#submit{  
+    background: #eef0ee;    
     transition-duration: 1s;
     transition-timing-function: linear;
   }
@@ -47,7 +46,7 @@ h3{
   .item{
     flex:1;
   }
- 
+   
   @media screen and (min-width:768px){
     .group {
       flex-direction:row;

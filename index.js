@@ -26,7 +26,6 @@ function populateCountries(){
   $("#countryInput").append(`<option value='${country}'>${country}</option>` )
   })
 }
-
 // Get Cases Result
 function getCasesResult(userInput){
 const url=`https://rapidapi.p.rapidapi.com/statistics`;  
@@ -46,8 +45,6 @@ fetch(url, {
 .catch(err => {
 	console.error(err);
 });
-
-
 }
 
 function renderResult(response, userInput)

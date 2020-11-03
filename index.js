@@ -6,79 +6,79 @@ container: 'map',
 style: 'mapbox://styles/mapbox/dark-v10',
 zoom:1.5,
 });
-// Generate the URL
-const url="https://api.covid19api.com/country/${userInput}/status/confirmed"
+
 //Initialize the function
 function init(){
-  $( "#from" ).datepicker();
-  $( "#to" ).datepicker();
   populateCountries();
   submitForm();  
 }
 //Create a watch to prevent form submission
 function submitForm(){
-  $("#app-form").submit(e=>{
-    e.preventDefault();
+  $("#app-form").submit(e=>{  
+  e.preventDefault();
   const userInput= $("#countryInput").val();  
-  const fromDateInput= $('#from').val();
-  const toDateInput= $('#to').val();
-  getCasesResult(userInput, fromDateInput, toDateInput);
+  getCasesResult(userInput);
   });  
 }
 //Get list of countries
 function populateCountries(){
   countryList.forEach((country)=> {
-  $("#countryInput").append(`<option>${country}</option>` )
+  $("#countryInput").append(`<option value='${country}'>${country}</option>` )
   })
 }
-//Format the query parameters
-function formatQueryParams(params){
-  const queryItems= Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)  
-  return queryItems.join("&");
-}
-// Get Cases Result
-function getCasesResult(userInput, fromDateInput, toDateInput){
-  const url=`https://api.covid19api.com/country/${userInput}/status/confirmed`;  
-  const params={
-    from: fromDateInput,
-    to: toDateInput
-};
 
-const queryString= formatQueryParams(params);
-const searchURL= url + '?' + queryString;
-fetch(searchURL)
-  .then(response =>response.json())
-  .then(response => renderCountryResults(response))
-  .catch(err =>alert(err));
+// Get Cases Result
+function getCasesResult(userInput){
+const url=`https://rapidapi.p.rapidapi.com/statistics`;  
+
+fetch(url, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": "997b4b4b44mshffb7d7452a7563ap1d23d6jsn758cf6f706f3",
+		"x-rapidapi-host": "covid-193.p.rapidapi.com"
+	}
+})
+.then(response => response.json())
+.then(response =>
+  {
+    renderResult(response, userInput);
+  })
+.catch(err => {
+	console.error(err);
+});
+
+
 }
-// Render the results
-function renderCountryResults(countryList){
-    $("#results").empty();    
-    let totalCount = getTotalCount(countryList);
-    $("#results").append(`<h3>Total confirmed cases: ${totalCount}</h3>`);
-    //Create marker on map
-    let lon = getLonLat(countryList, "Lon")
-    let lat = getLonLat(countryList, "Lat")
-    mapboxgl.accessToken = mapbox_token;
-    var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v10',
-    zoom:1.5,
-    });
-    var marker = new mapboxgl.Marker()
-    .setLngLat([lon, lat])
-    .addTo(map);
-}  
-//Generate marker for each country
-function getLonLat(countryList, value){
-  return parseFloat(countryList[0][`${value}`]);
+
+function renderResult(response, userInput)
+{
+  $("#results").html(``);
+    let countryData = response.response.find(x=> x.country == userInput);
+    $("#results").append(`<h4>View Info: </h4>`);
+    Object.entries(countryData).forEach(([k,v])=> {
+      if(k == "cases")
+      {
+        Object.entries(countryData.cases).forEach(([k,v])=> {
+          $("#results").append(`<h5>${k} : ${v} </h5>`);
+        });
+        return;
+      }
+      else if(k == "deaths")
+      {
+        Object.entries(countryData.deaths).forEach(([k,v])=> {
+          $("#results").append(`<h5>${k} : ${v} </h5>`);
+        });
+        return;
+      }
+      if(k == "tests")
+      {
+        Object.entries(countryData.tests).forEach(([k,v])=> {
+          $("#results").append(`<h5>${k} : ${v} </h5>`);
+        });
+        return;
+      }
+      $("#results").append(`<h5>${k} : ${v} </h5>`);
+    })
 }
-//Get total cases count
-function getTotalCount(countryList){
-  let totalCount = 0;
-  countryList.forEach(country => {
-  totalCount +=  country.Cases;    
-  }) 
-  return totalCount;   
-}
+
 $(init);        

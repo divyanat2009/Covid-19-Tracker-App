@@ -77,5 +77,4 @@ function renderResult(response, userInput)
       $("#results").append(`<h5>${k} : ${v} </h5>`);
     })
 }
-
 $(init);        

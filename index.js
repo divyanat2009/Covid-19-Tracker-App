@@ -76,5 +76,20 @@ function renderResult(response, userInput)
       }
       $("#results").append(`<h5>${k} : ${v} </h5>`);
     })
+    //Create marker on map
+    let countryMark = getCountry(countryList, "country")
+    //let lat = getLonLat(countryList, "Lat")
+    mapboxgl.accessToken = mapbox_token;
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v10',
+    zoom:1.5,
+    });
+    var marker = new mapboxgl.Marker()
+    .setCountry(countryMark)
+    .addTo(map);   
+}
+function getCountry(countryList, value){
+  return parseFloat(countryList[0][`${value}`]);
 }
 $(init);        

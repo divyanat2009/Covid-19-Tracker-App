@@ -1,4 +1,5 @@
-"use strict"
+"use strict";
+
 //Generate the MapBox
 const mapbox_token="pk.eyJ1IjoiZGl2eWFuYXQyMDA5IiwiYSI6ImNrZ3NjZW9mbTBhdmMyd3J6OGp2czNiZnAifQ.MGN9qZ3Mku6-FSlgJqgbEQ";
 mapboxgl.accessToken = mapbox_token;
@@ -11,37 +12,36 @@ zoom:1.5,
 //Initialize the function
 function init(){
   populateCountries();
-  submitForm();  
+  submitForm();   
 }
+
 //Create a watch to prevent form submission
 function submitForm(){
   $("#app-form").submit(e=>{  
   e.preventDefault();
   const userInput= $("#countryInput").val();  
+//Get countries list from API   
   fetch(`https://api.covid19api.com/country/${userInput}/status/confirmed/live?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z`)
   .then (response => response.json())
   .then(response => {
-    console.log(response[0].Lat, response[0].Lon);
-    const mapbox_token="pk.eyJ1IjoiZGl2eWFuYXQyMDA5IiwiYSI6ImNrZ3NjZW9mbTBhdmMyd3J6OGp2czNiZnAifQ.MGN9qZ3Mku6-FSlgJqgbEQ";
-mapboxgl.accessToken = mapbox_token;
-var map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/dark-v10',
-zoom:1.5,
-});
-    var marker = new mapboxgl.Marker()
-.setLngLat([response[0].Lon, response[0].Lat])
-.addTo(map);
+     (response[0].Lat, response[0].Lon);
+  const mapbox_token="pk.eyJ1IjoiZGl2eWFuYXQyMDA5IiwiYSI6ImNrZ3NjZW9mbTBhdmMyd3J6OGp2czNiZnAifQ.MGN9qZ3Mku6-FSlgJqgbEQ";
+  mapboxgl.accessToken = mapbox_token;
+  var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/dark-v10',
+  zoom:1.5,
+  });
+//Add marker on map
+  var marker = new mapboxgl.Marker()
+  .setLngLat([response[0].Lon, response[0].Lat])
+  .addTo(map);
   })
   getCasesResult(userInput);
   });  
 }
-function getRequest(url){
-  
-}
-//Get list of countries
-function populateCountries(){
-  fetch("https://covid-193.p.rapidapi.com/countries", {
+function getRequest(url,cb){
+  fetch(url, {
     "method": "GET",
     "headers": {
       "x-rapidapi-key": "997b4b4b44mshffb7d7452a7563ap1d23d6jsn758cf6f706f3",
@@ -49,19 +49,19 @@ function populateCountries(){
     }
   })
   .then(response => response.json())
-  .then(response =>
-    {
-    
-    
-      response.response.forEach((country)=> {
-        $("#countryInput").append(`<option value='${country}'>${country}</option>` )
-        })        
-    }).catch(err =>alert(err)); 
+  .then(response =>cb(response))    
+}
+//Get list of countries
+function populateCountries(){
+  getRequest("https://covid-193.p.rapidapi.com/countries",function(result){
+  result.response.forEach((country)=> {
+  $("#countryInput").append(`<option value='${country}'>${country}</option>`)
+  })     
+  }); 
 }
 //Get Cases Result
 function getCasesResult(userInput){
 const url=`https://rapidapi.p.rapidapi.com/statistics`;  
-
 fetch(url, {
 	"method": "GET",
 	"headers": {
@@ -77,7 +77,7 @@ fetch(url, {
 .catch(err => {alert(err);
 });
 }
-
+//Render the results
 function renderResult(response, userInput)
 {
   $("#results").html(``);

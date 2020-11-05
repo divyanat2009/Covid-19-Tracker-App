@@ -20,7 +20,7 @@ function submitForm(){
   $("#app-form").submit(e=>{  
   e.preventDefault();
   const userInput= $("#countryInput").val();  
-//Get countries list from API   
+//Get longitude and latitude of countries from API   
   fetch(`https://api.covid19api.com/country/${userInput}/status/confirmed/live?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z`)
   .then (response => response.json())
   .then(response => {
@@ -40,6 +40,7 @@ function submitForm(){
   getCasesResult(userInput);
   });  
 }
+
 function getRequest(url,cb){
   fetch(url, {
     "method": "GET",
@@ -51,6 +52,7 @@ function getRequest(url,cb){
   .then(response => response.json())
   .then(response =>cb(response))    
 }
+
 //Get list of countries
 function populateCountries(){
   getRequest("https://covid-193.p.rapidapi.com/countries",function(result){

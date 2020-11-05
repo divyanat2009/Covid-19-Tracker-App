@@ -14,7 +14,11 @@ header{
 h1{
   margin-left: 10px;
 }
-
+h4{
+  font-size: 20px;
+  color: rgb(255, 20, 20);
+}
+/*Results*/
 #results{
   /*margin-left: 10px;*/
   font-size: 20px;
@@ -27,11 +31,13 @@ h1{
     width: 100vw;
     height:100vh;
 }
+/*Form*/
 #app-form{
   Font-size: 15px;
   padding:10px;
   font-style: oblique;
 }
+/*Button*/
 #submit{  
     background: #eef0ee;    
     transition-duration: 1s;
@@ -40,12 +46,8 @@ h1{
 #submit:hover {
     background: rgb(192, 11, 11);
     color: rgb(231, 216, 216);
-  }
-  
-h4{
-  font-size: 20px;
-  color: rgb(255, 20, 20);
-}
+  } 
+
 /*Groups & Items-Mobile First*/
 .group{
     display: flex;

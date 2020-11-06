@@ -6,8 +6,9 @@ Landing Page:
 
 App Description:
 This app helps user track Covid-19 confirmed cases across countries.
-The results are found using Covid19 API and MapBox.
-User selects a country and date-from, date-to options. This search gives user total confirmed cases count.
+User selects a country and clicks search, to view info about the country, including total number of cases.
+A marker on the map shows the country we are viewing.
+The results are found using an external API and MapBox.
 This app is designed using: HTML/CSS/JavaScript/jQuery.
 
 Screenshots of the app:

@@ -11,6 +11,7 @@ container: 'map',
 style: 'mapbox://styles/mapbox/dark-v10',
 zoom:1.5,
 });
+return map;
 }
 //Initialize the function
 function init(){
@@ -32,10 +33,10 @@ function submitForm(){
   .then (response => response.json())
   .then(response => {
   (response[0].Lat, response[0].Lon);   
-  generateMap();
+  let map = generateMap();
   //Add marker on map
   const marker = new mapboxgl.Marker()
-  .setLngLat([response[0].Lon, response[0].Lat])
+  .setLngLat([parseFloat(response[0].Lon), parseFloat(response[0].Lat)])
   .addTo(map);
   })
   getCasesResult(userInput);

@@ -32,7 +32,7 @@ function submitForm(){
   fetch(lonLatURL)
   .then (response => response.json())
   .then(response => {
-  (response[0].Lat, response[0].Lon);   
+  (response[0].Lat, response[0].Lon);
   let map = generateMap();
   //Add marker on map
   const marker = new mapboxgl.Marker()
@@ -83,7 +83,7 @@ function getCasesResult(userInput){
 //Render the results
 function renderResult(response, userInput){
   $("#results-list").html(``);
-  $("#results").show();
+  $("#results").show();  
   let countryData = response.response.find(x=> x.country == userInput);    
   $("#results-ist").append(`<h4>View Info: </h4>`);    
   Object.entries(countryData).forEach(([k,v])=> {

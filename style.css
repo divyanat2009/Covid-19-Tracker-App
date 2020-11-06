@@ -58,7 +58,7 @@ h4{
     flex:1;
   }   
   @media screen and (min-width:800px){
-    .group, #info-container{
+    .group{
       flex-direction:row;      
       }     
  }

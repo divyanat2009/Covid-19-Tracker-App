@@ -24,9 +24,7 @@ function submitForm(){
   fetch(`https://api.covid19api.com/country/${userInput}/status/confirmed/live?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z`)
   .then (response => response.json())
   .then(response => {
-     (response[0].Lat, response[0].Lon);
-  const mapbox_token="pk.eyJ1IjoiZGl2eWFuYXQyMDA5IiwiYSI6ImNrZ3NjZW9mbTBhdmMyd3J6OGp2czNiZnAifQ.MGN9qZ3Mku6-FSlgJqgbEQ";
-  mapboxgl.accessToken = mapbox_token;
+     (response[0].Lat, response[0].Lon);  
   var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/dark-v10',
